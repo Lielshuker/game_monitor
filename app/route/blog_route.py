@@ -1,4 +1,3 @@
-# from app import app
 from app import app
 from app.controllers.default_controller import blog_get
 
