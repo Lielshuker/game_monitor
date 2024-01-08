@@ -1,5 +1,6 @@
-from app import config, celery_app
-from route.blog_route import *
+from app import celery_app
+import config
+from app.route.blog_route import *
 from celery.bin import worker
 
 if __name__ == '__main__':
