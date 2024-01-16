@@ -1,8 +1,10 @@
 class Config(object):
     TESTING = False
     DEBUG = False
+    FLASK_APP = '__main__.py'
     FLASK_RUN_PORT = 5000
     FLASK_RUN_HOST = '127.0.0.1'
+    REDIS_HOST = 'redis'
 
 
 class CeleryConfig(Config):
@@ -17,11 +19,8 @@ class CeleryConfig(Config):
     'add-every-30-seconds': {
         'task': 'tasks.add',
         'schedule': 30.0,
-        'args': (16, 16)
-    },
-}
-
-
+        'args': (16, 16)},
+    }
     # List of modules to import when the Celery worker starts.
     # imports = ('myapp.tasks',)
     ## Using the database to store task state and results.
@@ -39,6 +38,7 @@ class DevelopmentConfig(Config):
     DEBUG = False
     ENV = 'development'
     DATABASE_URI = "sqlite:////tmp/foo.db"
+    REDIS_HOST = "127.0.0.1"
 
 
 class TestingConfig(Config):
