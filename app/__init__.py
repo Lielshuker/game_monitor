@@ -1,23 +1,16 @@
-from flask import Flask
+import connexion
 
+import config
+from app import encoder
+# from app.services.celery_beat import celery_init_app
 from app.services.celery_beat import celery_init_app
 
 
-def init_app():
-    flask_app = Flask(__name__)
-    flask_app.config.from_object('config.DevelopmentConfig')
-    return flask_app
+def create_app():
+    app = connexion.App(__name__, specification_dir='./swagger/', host=config.Config.FLASK_RUN_HOST)
+    app.app.json_encoder = encoder.JSONEncoder
+    app.add_api('swagger.yaml', arguments={'title': 'mobile monitor'}, pythonic_params=True)
+    return app
 
 
-app = init_app()
-celery_app = celery_init_app(app)
-celery_app.conf.beat_schedule = {
-    'add-every-30-seconds': {
-        'task': 'tasks.add',
-        'schedule': 30.0,
-        'args': (16, 16)
-    },
-}
-celery_app.conf.timezone = 'UTC'
-
-
+app = create_app()

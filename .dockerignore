@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# project word
+project_tech.docx
+
+# Distribution / packaging
+.Python
+env/
+build/
+
+# Virtual environment
+.env
+.venv/
+venv/
+
+# PyCharm
+.idea

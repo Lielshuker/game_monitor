@@ -3,25 +3,56 @@ version: '3'
 services:
   web:
     build: .
+    image: web
+    container_name: web
     ports:
       - "5000:5000"
+    command: python __main__.py run -h 0.0.0.0
     volumes:
-      - ./api:/app
+      - ./app:/app
     environment:
-      - FLASK_ENV=development
+#      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=config.DevelopmentConfig
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: celery -A app.services.celery_beat.celery_tasks worker --loglevel=info --logfile=app.logs.celery
+    volumes:
+      - ./app:/app
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=config.DevelopmentConfig
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
-
-
-# services:
-#  web:
-#    build: .
-#    ports:
-#      - "8000:5000"
-#  rabbitmq:
-#    image: "rabbitmq:3.9.13-management"
+#  rabbit:
+#    hostname: rabbit
+#    image: rabbitmq:latest
 #    environment:
 #      - RABBITMQ_DEFAULT_USER=liel
 #      - RABBITMQ_DEFAULT_PASS=1234
+#    ports:
+#      - "5673:5672"
+#  worker:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    volumes:
+#      - .:/app
+#    links:
+#      - rabbit
+#    depends_on:
+#      - rabbit
+
