@@ -1,7 +1,8 @@
 import datetime
 
 import six
-import type_util
+import typing
+from app import type_util
 
 
 def _deserialize(data, klass):
