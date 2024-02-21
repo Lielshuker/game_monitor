@@ -2,15 +2,15 @@ openapi: 3.0.0
 info:
   title: mobile monitor
   description: REST API for mobile game monitor
-  version: "1"
+  version: 1.0.0
 servers:
 - url: https://virtserver.swaggerhub.com/lylswqr/MobileMonitor/1
   description: SwaggerHub API Auto Mocking
 paths:
-  /:
+  /blog:
     get:
       description: Returns a blog of COD Mobile
-      operationId: root_get
+      operationId: blog_get
       responses:
         "200":
           description: Successfully returned a list of reward
@@ -27,12 +27,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inline_response_400'
-      x-openapi-router-controller: app.controllers.default_controller
+      x-openapi-router-controller: controllers.default_controller
 components:
   schemas:
     inline_response_200:
-#      required:
-#      - username
+      required:
+      - username
       type: object
       properties:
         blog_name:
