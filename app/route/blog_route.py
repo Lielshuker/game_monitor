@@ -14,7 +14,7 @@ def hello_world():
 
 @app.route("/blog")
 def get_blog():
-    return jsonify(msg='pong')
+    return jsonify(msg='pong') 
 
 
 @app.route("/redis_count")
