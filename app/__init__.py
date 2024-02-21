@@ -1,8 +1,6 @@
 import connexion
-
 import config
 from app import encoder
-# from app.services.celery_beat import celery_init_app
 from app.services.celery_beat import celery_init_app
 
 
@@ -14,3 +12,4 @@ def create_app():
 
 
 app = create_app()
+celery_app = celery_init_app()

@@ -1,27 +1,4 @@
-from celery import Celery
-
-# todo move it from here
-celery_app = Celery(__name__, backend="redis://localhost:6379/0", broker="redis://localhost:6379/0")
-# celery_app.conf.broker_url = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/0")
-# celery_app.conf.result_backend = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost/0")
-# @celery_app.task
-# def setup_periodic_tasks(sender, **kwargs):
-#     # Calls test('hello') every 10 seconds.
-#     sender.add_periodic_task(10.0, test.s('hello'), name='add every 10')
-#
-#     # Calls test('hello') every 30 seconds.
-#     # It uses the same signature of previous task, an explicit name is
-#     # defined to avoid this task replacing the previous one defined.
-#     sender.add_periodic_task(30.0, test.s('hello'), name='add every 30')
-#
-#     # Calls test('world') every 30 seconds
-#     sender.add_periodic_task(30.0, test.s('world'), expires=10)
-#
-#     # Executes every Monday morning at 7:30 a.m.
-#     sender.add_periodic_task(
-#         crontab(hour=7, minute=30, day_of_week=1),
-#         test.s('Happy Mondays!'),
-#     )
+from app import celery_app
 
 
 @celery_app.task

@@ -9,7 +9,8 @@ class Config(object):
 
 class CeleryConfig(Config):
     # celery
-    CELERY_BROKER_URL = 'amqp://liel:1234@localhost:5672//'
+    CELERY_BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_BACKEND_URL = 'redis://localhost:6379/0'
     CELERY_IMPORTS = 'app.services.celery_beat.celery_tasks'
     CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
     CELERY_TASK_SERIALIZER = 'json'
@@ -39,6 +40,7 @@ class DevelopmentConfig(Config):
     ENV = 'development'
     DATABASE_URI = "sqlite:////tmp/foo.db"
     REDIS_HOST = "127.0.0.1"
+
 
 
 class TestingConfig(Config):

@@ -27,11 +27,8 @@ def redis_counter():
 def celery_add_task():
     x = 1
     y = 2
-    # z = add(x, y)
     task = add.delay(x, y)
     return {"result_id": task.id}
-    # return jsonify({'task_id': task.result}), 202
-    # return "<p>Hello, World!</p>"
 
 
 @app.route("/result/<id>")
